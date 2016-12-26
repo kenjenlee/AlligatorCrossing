@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+//import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 //import com.magicians.reflectorcrazy.InputHandler.InputHandler;
@@ -27,7 +28,7 @@ public class Reflector extends ApplicationAdapter {
     private float ballX, ballY;
     private int score = 0;
     private float time = 0;
-    private float ballVelocity = 3;
+    private float ballVelocity = 900;
 
     private float pillarVelocity = 3;
     private Random  randomNum;
@@ -37,16 +38,14 @@ public class Reflector extends ApplicationAdapter {
     //pillarDist is distance between bottom left corner of
     //two consecutive pillars
     private float pillarDist;
-    private int pillarNum = 5;
+    private int pillarNum = 10;
     //gap between pillars in same row
-    private float gap = 100;
-
-    private float widthScale, heightScale;
+    private float gap;
 
     private Texture ball;
     private Texture pillarLeft;
     private Texture pillarRight;
-    private Texture background;
+  //  private Texture background;
 	
 	@Override
 	public void create () {
@@ -63,17 +62,19 @@ public class Reflector extends ApplicationAdapter {
         pillarRight = new Texture(Gdx.files.internal("pillarRight.png"));
      //   background = new Texture(Gdx.files.internal(""));
 
-       // pillarLeft.setHeight() = Gdx.graphics.getHeight() * 0.15;
 
-
+        gap = ball.getWidth() * 1.5f;
         touchCoord = new Vector3();
         ballX = Gdx.graphics.getWidth()/2 - ball.getWidth()/2;
-        ballY = Gdx.graphics.getHeight()/2 - ball.getHeight()/2;
+        ballY = Gdx.graphics.getHeight()/3 - ball.getHeight()/2;
         randomNum = new Random();
         pillarOffset = new float[pillarNum];
         pillarY = new float[pillarNum];
-        pillarDist = Gdx.graphics.getHeight() / 5;
-        maxPillarOffset = Gdx.graphics.getWidth() - gap/2 - 100;
+        pillarDist = Gdx.graphics.getHeight() / 4;
+        maxPillarOffset = 500;
+        // maxPillarOffset = Gdx.graphics.getWidth()/2 - gap/2 - 100;
+       // pillarWidth = pillarLeft.getWidth()
+
 
         for(int i=0; i<pillarNum; i++){
 
@@ -102,19 +103,19 @@ public class Reflector extends ApplicationAdapter {
             if(Gdx.input.isTouched()){
 
                 touchCoord.set(Gdx.input.getX(), Gdx.input.getY(),0);
-                camera.unproject(touchCoord);
+               // camera.unproject(touchCoord);
 
-                float touchX = touchCoord.x;
+              //  float touchX = touchCoord.x;
 
-                if(touchX > Gdx.graphics.getWidth()/2){
+                if(Gdx.input.getX() < Gdx.graphics.getWidth()/2){
                     //ball goes left
                     if(ballX > 0){ //ensure ball does not go off screen
                         ballX -= ballVelocity; // * Gdx.graphics.getRawDeltaTime();
                     }
 
-                }else{
+                }else if(Gdx.input.getX() > Gdx.graphics.getWidth()/2){
                     //ball goes right
-                    if(ballX < Gdx.graphics.getWidth()){
+                    if(ballX + ball.getWidth() < Gdx.graphics.getWidth()){
                         ballX += ballVelocity; // * Gdx.graphics.getRawDeltaTime();
                     }
                 }
@@ -123,27 +124,33 @@ public class Reflector extends ApplicationAdapter {
             for(int i=0; i<pillarNum; i++){
                 pillarY[i] -= pillarVelocity; // * Gdx.graphics.getRawDeltaTime();
 
-                if(pillarY[i] <= -pillarLeft.getHeight()){
+                if(pillarY[i] <= -Gdx.graphics.getHeight()*0.05){
                     pillarY[i] = pillarNum * pillarDist;
                     //set offset to new random offset
-                    pillarOffset[i] = (randomNum.nextFloat() - 0.5f) * 2 * maxPillarOffset;
+                    do{
+                        pillarOffset[i] = (randomNum.nextFloat()-0.5f)* maxPillarOffset * 2;
+                    }while(i>0 && abs(pillarOffset[i]-pillarOffset[i-1])>500);
                 }
 
-                batch.draw(pillarLeft,
-                        Gdx.graphics.getWidth()/2-gap/2+pillarOffset[i]-pillarLeft.getWidth(),
-                        pillarY[i]);
+                float pillarLeftLen = Gdx.graphics.getWidth()/2 - gap/2 + pillarOffset[i];
+                float pillarRightLen = Gdx.graphics.getWidth()/2 - gap/2 - pillarOffset[i];
+
+                batch.draw(pillarLeft, 0, pillarY[i],pillarLeftLen,
+                        (float) (Gdx.graphics.getHeight()*0.05));
                 batch.draw(pillarRight, Gdx.graphics.getWidth()/2+gap/2+pillarOffset[i],
-                        pillarY[i]);
+                        pillarY[i], pillarRightLen,
+                        (float) (Gdx.graphics.getHeight()*0.05));
+
             }
 
             batch.draw(ball, ballX, ballY);
 
-            time += Gdx.graphics.getRawDeltaTime();
-            if(time%7 == 0){
+           // time += Gdx.graphics.getRawDeltaTime();
+           // if(time%7 == 0){
                 //Increase speed every 7 seconds
-                ballVelocity += 2;
-                pillarVelocity += 2;
-            }
+                ballVelocity += 0.0005;
+                pillarVelocity += 0.0005;
+         //   }
 
 
 
@@ -169,6 +176,6 @@ public class Reflector extends ApplicationAdapter {
         pillarLeft.dispose();
         pillarRight.dispose();
         ball.dispose();
-        background.dispose();
+      //  background.dispose();
 	}
 }
