@@ -11,6 +11,8 @@ import com.badlogic.gdx.math.Vector3;
 //import com.magicians.reflectorcrazy.InputHandler.InputHandler;
 
 import java.util.Random;
+
+import static java.lang.Math.abs;
 //import com.magicians.reflectorcrazy.GameManager.GameManager;
 
 public class Reflector extends ApplicationAdapter {
@@ -24,8 +26,18 @@ public class Reflector extends ApplicationAdapter {
     private float ballX, ballY;
     private int score = 0;
     private float time = 0;
-    private float velocity = 3;
-   // private Random  randomNum;
+    private float ballVelocity = 3;
+    private float pillarVelocity = 3;
+    private Random  randomNum;
+    private float[] pillarOffset;
+    private float maxPillarOffset;
+    private float[] pillarY;
+    //pillarDist is distance between bottom left corner of
+    //two consecutive pillars
+    private float pillarDist;
+    private int pillarNum = 5;
+    //gap between pillars in same row
+    private float gap;
 
     private Texture ball;
     private Texture pillarLeft;
@@ -50,6 +62,23 @@ public class Reflector extends ApplicationAdapter {
         touchCoord = new Vector3();
         ballX = Gdx.graphics.getWidth()/2 - ball.getWidth()/2;
         ballY = Gdx.graphics.getHeight()/2 - ball.getHeight()/2;
+        randomNum = new Random();
+        pillarOffset = new float[pillarNum];
+        pillarY = new float[pillarNum];
+        pillarDist = Gdx.graphics.getHeight() / 5;
+        maxPillarOffset = Gdx.graphics.getWidth() - 300;
+
+        for(int i=0; i<pillarNum; i++){
+
+            //ensure gap in rows next to each other is not too far away from each other
+            do{
+                pillarOffset[i] = (randomNum.nextFloat()-0.5f)* maxPillarOffset * 2;
+            }while(i>0 && abs(pillarOffset[i]-pillarOffset[i-1])>500);
+
+            //first pillar start from just off screen to the top
+            pillarY[i] = Gdx.graphics.getHeight() + i * pillarDist;
+        }
+
 	}
 
 	@Override
@@ -60,6 +89,7 @@ public class Reflector extends ApplicationAdapter {
 		batch.begin();
 
         if(gameState==0 && Gdx.input.justTouched()){
+            //start game
             gameState = 1;
         }else if(gameState == 1){
             if(Gdx.input.justTouched()){
@@ -72,25 +102,47 @@ public class Reflector extends ApplicationAdapter {
                 if(touchX > Gdx.graphics.getWidth()/2){
                     //ball goes left
                     if(ballX > 0){ //ensure ball does not go off screen
-                        ballX -= velocity * Gdx.graphics.getRawDeltaTime();
+                        ballX -= ballVelocity * Gdx.graphics.getRawDeltaTime();
                     }
 
                 }else{
                     //ball goes right
                     if(ballX < Gdx.graphics.getWidth()){
-                        ballX += velocity * Gdx.graphics.getRawDeltaTime();
+                        ballX += ballVelocity * Gdx.graphics.getRawDeltaTime();
                     }
                 }
-
-                time += Gdx.graphics.getRawDeltaTime();
-                if(time%7 == 0){
-                    //Increase speed every 7 seconds
-                    velocity += 2;
-                }
-
             }
-        }else{
+
+            for(int i=0; i<pillarNum; i++){
+                pillarY[i] -= pillarVelocity * Gdx.graphics.getRawDeltaTime();
+
+                if(pillarY[i] <= -pillarLeft.getHeight()){
+                    pillarY[i] = pillarNum * pillarDist;
+                    //set offset to new random offset
+                    pillarOffset[i] = (randomNum.nextFloat() - 0.5f) * 2 * maxPillarOffset;
+                }
+            }
+
+            time += Gdx.graphics.getRawDeltaTime();
+            if(time%7 == 0){
+                //Increase speed every 7 seconds
+                ballVelocity += 2;
+                pillarVelocity += 2;
+            }
+
+
+
+        }else{ //game over
+            //display score and highest score
+
+
+
+
+            //reset score etc.
             score = 0;
+            pillarVelocity = 3;
+            ballVelocity = 3;
+            gameState = 0;
         }
         //GameManager.render(batch, touchCount);
 		batch.end();
@@ -99,6 +151,9 @@ public class Reflector extends ApplicationAdapter {
 	@Override
 	public void dispose () {
 		batch.dispose();
-
+        pillarLeft.dispose();
+        pillarRight.dispose();
+        ball.dispose();
+        background.dispose();
 	}
 }
