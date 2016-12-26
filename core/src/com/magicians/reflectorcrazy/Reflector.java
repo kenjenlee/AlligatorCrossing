@@ -28,6 +28,7 @@ public class Reflector extends ApplicationAdapter {
     private int score = 0;
     private float time = 0;
     private float ballVelocity = 3;
+
     private float pillarVelocity = 3;
     private Random  randomNum;
     private float[] pillarOffset;
@@ -39,6 +40,8 @@ public class Reflector extends ApplicationAdapter {
     private int pillarNum = 5;
     //gap between pillars in same row
     private float gap = 100;
+
+    private float widthScale, heightScale;
 
     private Texture ball;
     private Texture pillarLeft;
@@ -58,7 +61,10 @@ public class Reflector extends ApplicationAdapter {
         ball = new Texture(Gdx.files.internal("badlogic.jpg"));
         pillarLeft = new Texture(Gdx.files.internal("pillarLeft.png"));
         pillarRight = new Texture(Gdx.files.internal("pillarRight.png"));
-        background = new Texture(Gdx.files.internal(""));
+     //   background = new Texture(Gdx.files.internal(""));
+
+       // pillarLeft.setHeight() = Gdx.graphics.getHeight() * 0.15;
+
 
         touchCoord = new Vector3();
         ballX = Gdx.graphics.getWidth()/2 - ball.getWidth()/2;
@@ -86,14 +92,14 @@ public class Reflector extends ApplicationAdapter {
 	public void render () {
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        batch.setProjectionMatrix(camera.combined);
+     //   batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 
         if(gameState==0 && Gdx.input.justTouched()){
             //start game
             gameState = 1;
         }else if(gameState == 1){
-            if(Gdx.input.justTouched()){
+            if(Gdx.input.isTouched()){
 
                 touchCoord.set(Gdx.input.getX(), Gdx.input.getY(),0);
                 camera.unproject(touchCoord);
@@ -103,19 +109,19 @@ public class Reflector extends ApplicationAdapter {
                 if(touchX > Gdx.graphics.getWidth()/2){
                     //ball goes left
                     if(ballX > 0){ //ensure ball does not go off screen
-                        ballX -= ballVelocity * Gdx.graphics.getRawDeltaTime();
+                        ballX -= ballVelocity; // * Gdx.graphics.getRawDeltaTime();
                     }
 
                 }else{
                     //ball goes right
                     if(ballX < Gdx.graphics.getWidth()){
-                        ballX += ballVelocity * Gdx.graphics.getRawDeltaTime();
+                        ballX += ballVelocity; // * Gdx.graphics.getRawDeltaTime();
                     }
                 }
             }
 
             for(int i=0; i<pillarNum; i++){
-                pillarY[i] -= pillarVelocity * Gdx.graphics.getRawDeltaTime();
+                pillarY[i] -= pillarVelocity; // * Gdx.graphics.getRawDeltaTime();
 
                 if(pillarY[i] <= -pillarLeft.getHeight()){
                     pillarY[i] = pillarNum * pillarDist;
