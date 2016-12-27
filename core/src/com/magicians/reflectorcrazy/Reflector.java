@@ -14,6 +14,12 @@ import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.utils.viewport.Viewport;
 //import com.magicians.reflectorcrazy.InputHandler.InputHandler;
 import java.util.Random;
 import static java.lang.Math.abs;
@@ -66,6 +72,12 @@ public class Reflector extends ApplicationAdapter {
 
     //Font
     private BitmapFont scoreFont;
+
+    //Button
+    private TextButton buttonRestart;
+    private Skin skinRestart;
+    private Stage gameOverStage;
+
 	
 	@Override
 	public void create () {
@@ -106,6 +118,17 @@ public class Reflector extends ApplicationAdapter {
         scoreFont = new BitmapFont();
         scoreFont.setColor(Color.BLACK);
         scoreFont.getData().setScale(10);
+
+        //Button
+        /**
+        skinRestart = new Skin();
+        buttonRestart = new TextButton("Restart", skinRestart);
+        buttonRestart.setColor(Color.BLACK);
+        buttonRestart.setPosition(200,200);
+        gameOverStage = new Stage();
+        gameOverStage.addActor(buttonRestart);
+        gameOverStage.addActor(buttonRestart);
+         **/
 
 
         for(int i=0; i<pillarNum; i++){
@@ -228,7 +251,9 @@ public class Reflector extends ApplicationAdapter {
 
         }else{ //game over
             //display score and highest score
-
+            //gameOverStage.act(Math.min(Gdx.graphics.getDeltaTime(),1/30f));
+            //gameOverStage.draw();
+            //Table.drawDebug(gameOverStage);
 
 
 
@@ -251,6 +276,8 @@ public class Reflector extends ApplicationAdapter {
         pillarLeft.dispose();
         pillarRight.dispose();
         ball.dispose();
+        gameOverStage.dispose();
+        skinRestart.dispose();
 
       //  background.dispose();
 
