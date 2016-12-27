@@ -2,10 +2,12 @@ package com.magicians.reflectorcrazy;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 //import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Circle;
@@ -61,6 +63,9 @@ public class Reflector extends ApplicationAdapter {
     private Texture pillarLeft;
     private Texture pillarRight;
   //  private Texture background;
+
+    //Font
+    private BitmapFont scoreFont;
 	
 	@Override
 	public void create () {
@@ -96,6 +101,11 @@ public class Reflector extends ApplicationAdapter {
         rectLeft = new Rectangle[pillarNum];
         rectRight = new Rectangle[pillarNum];
         circleBall = new Circle();
+
+        //Font
+        scoreFont = new BitmapFont();
+        scoreFont.setColor(Color.BLACK);
+        scoreFont.getData().setScale(10);
 
 
         for(int i=0; i<pillarNum; i++){
@@ -211,6 +221,7 @@ public class Reflector extends ApplicationAdapter {
             batch.draw(ball, ballX, ballY);
             circleBall.set(ballX+ball.getWidth()/2, ballY+ball.getHeight()/2, ball.getHeight()/2);
            // shapeRenderer.circle(circleBall.x, circleBall.y, circleBall.radius);
+            scoreFont.draw(batch, String.valueOf(score), 100, 200);
 
             ballVelocity += 0.0005;
             pillarVelocity += 0.0005;
