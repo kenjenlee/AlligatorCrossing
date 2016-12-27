@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 //import com.magicians.reflectorcrazy.InputHandler.InputHandler;
@@ -29,7 +30,7 @@ public class Reflector extends ApplicationAdapter {
     private int score = 0;
 
     //shape Renderer
-    private ShapeRenderer shapeRenderer;
+   // private ShapeRenderer shapeRenderer;
     private Rectangle[] rectLeft;
     private Rectangle[] rectRight;
     private Circle circleBall;
@@ -53,6 +54,7 @@ public class Reflector extends ApplicationAdapter {
     private int pillarScoring = 0;
     private int maxConsecGapDist = 700;
     private int minConsecGapDist = 200;
+    private float percScreenWidth = 0.05f;
 
     // Textures
     private Texture ball;
@@ -90,7 +92,7 @@ public class Reflector extends ApplicationAdapter {
         randomNum = new Random();
 
         //shapeRenderer variables
-        shapeRenderer = new ShapeRenderer();
+        //shapeRenderer = new ShapeRenderer();
         rectLeft = new Rectangle[pillarNum];
         rectRight = new Rectangle[pillarNum];
         circleBall = new Circle();
@@ -124,8 +126,10 @@ public class Reflector extends ApplicationAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
      //   batch.setProjectionMatrix(camera.combined);
 		batch.begin();
+        /**
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(com.badlogic.gdx.graphics.Color.BLACK);
+        **/
 
         if(gameState==0 && Gdx.input.justTouched()){
             //start game
@@ -164,7 +168,7 @@ public class Reflector extends ApplicationAdapter {
             for(int i=0; i<pillarNum; i++){
                 pillarY[i] -= pillarVelocity;
 
-                if(pillarY[i] <= -Gdx.graphics.getHeight()*0.05){
+                if(pillarY[i] <= -Gdx.graphics.getHeight()*percScreenWidth){
                     pillarY[i] = pillarNum * pillarDist;
                     //set offset to new random offset
                     int previous = i-1;
@@ -181,16 +185,32 @@ public class Reflector extends ApplicationAdapter {
                 float pillarRightLen = Gdx.graphics.getWidth()/2 - gap/2 - pillarOffset[i];
 
                 batch.draw(pillarLeft, 0, pillarY[i],pillarLeftLen,
-                        (float) (Gdx.graphics.getHeight()*0.05));
+                        Gdx.graphics.getHeight()*percScreenWidth);
                 batch.draw(pillarRight, Gdx.graphics.getWidth()/2+gap/2+pillarOffset[i],
                         pillarY[i], pillarRightLen,
-                        (float) (Gdx.graphics.getHeight()*0.05));
+                        Gdx.graphics.getHeight()*percScreenWidth);
+                rectLeft[i] = new Rectangle(0,pillarY[i], pillarLeftLen,
+                        Gdx.graphics.getHeight()*percScreenWidth);
+                rectRight[i] = new Rectangle(Gdx.graphics.getWidth()/2+gap/2+pillarOffset[i],
+                        pillarY[i], pillarRightLen, Gdx.graphics.getHeight()*percScreenWidth);
+                /**
+                shapeRenderer.rect(0,pillarY[i], pillarLeftLen,
+                        (float)(Gdx.graphics.getHeight()*0.05));
+                shapeRenderer.rect(Gdx.graphics.getWidth()/2+gap/2+pillarOffset[i],
+                        pillarY[i], pillarRightLen, (float)(Gdx.graphics.getHeight()*0.05));
+                 **/
+
+                if(Intersector.overlaps(circleBall,rectLeft[i]) ||
+                        Intersector.overlaps(circleBall,rectRight[i])){
+                    Gdx.app.log("Collision","Yes");
+                    gameState = 2;
+                }
 
             }
 
             batch.draw(ball, ballX, ballY);
             circleBall.set(ballX+ball.getWidth()/2, ballY+ball.getHeight()/2, ball.getHeight()/2);
-            shapeRenderer.circle(circleBall.x, circleBall.y, circleBall.radius);
+           // shapeRenderer.circle(circleBall.x, circleBall.y, circleBall.radius);
 
             ballVelocity += 0.0005;
             pillarVelocity += 0.0005;
@@ -210,13 +230,13 @@ public class Reflector extends ApplicationAdapter {
         }
         //GameManager.render(batch, touchCount);
 		batch.end();
-        shapeRenderer.end();
+      //  shapeRenderer.end();
 	}
 	
 	@Override
 	public void dispose () {
 		batch.dispose();
-        shapeRenderer.dispose();
+       // shapeRenderer.dispose();
         pillarLeft.dispose();
         pillarRight.dispose();
         ball.dispose();
