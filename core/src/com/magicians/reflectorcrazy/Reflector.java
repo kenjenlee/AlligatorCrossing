@@ -1,31 +1,11 @@
 package com.magicians.reflectorcrazy;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-//import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Circle;
-import com.badlogic.gdx.math.Intersector;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.utils.viewport.Viewport;
-import com.magicians.reflectorcrazy.InputHandler.InputHandler;
-import java.util.Random;
-import static java.lang.Math.abs;
-import com.magicians.reflectorcrazy.GameManager.GameManager;
-import com.magicians.reflectorcrazy.Screen1;
 import com.badlogic.gdx.Game;
 import com.magicians.reflectorcrazy.Screens.GameScreen;
 import com.magicians.reflectorcrazy.Screens.LoadingScreen;
@@ -43,7 +23,7 @@ public class Reflector extends Game {
     public LoadingScreen loadingScreen;
     public AssetManager assets;
 
-
+    public int score = 0;
     public BitmapFont font;
 
 

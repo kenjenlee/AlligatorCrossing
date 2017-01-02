@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.magicians.reflectorcrazy.Reflector;
@@ -30,7 +31,7 @@ public class LoadingScreen implements Screen {
         app.assets.load("Img/badlogic.jpg", Texture.class);
         app.assets.load("Img/pillarLeft.png", Texture.class);
         app.assets.load("Img/pillarRight.png", Texture.class);
-      //  app.assets.load("");
+        app.assets.load("UI/uiskin.atlas", TextureAtlas.class);
       //  app.assets.load();
       //  app.assets.load();
 
