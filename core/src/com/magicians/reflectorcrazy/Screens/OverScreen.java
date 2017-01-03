@@ -88,6 +88,20 @@ public class OverScreen implements Screen {
         });
         stage.addActor(buttonPlay);
 
+        buttonQuit = new TextButton("Restart", skin, "default");
+        buttonQuit.setPosition(app.viewportWidth/2, app.viewportHeight/3);
+        buttonQuit.setSize(app.viewportWidth/5, app.viewportHeight/10);
+        buttonQuit.addListener(new ClickListener() {
+
+            @Override
+
+            public void clicked(InputEvent event, float x, float y) {
+                System.exit(0);
+
+            }
+        });
+        stage.addActor(buttonQuit);
+
     }
 
 
@@ -128,6 +142,8 @@ public class OverScreen implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
+        skin.dispose();
+        fontButton.dispose();
 
     }
 }
