@@ -8,7 +8,7 @@
     default: { font: default-font }
   },
   com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
-    default: { down: default-round-down, up: default-round, font: default-font, fontColor: red },
+    default: { down: default-round-down, up: default-round, font: default-font, fontColor: white },
     toggle: { down: default-round-down, up: default-round, checked: default-round-down, font: default-font, checkedFontColor: white, downFontColor: black }
   },
   com.badlogic.gdx.scenes.scene2d.ui.ProgressBar$ProgressBarStyle: {

@@ -37,11 +37,11 @@ public class GameScreen implements Screen {
     private Circle circleBall;
 
     // ball variables
-    private float ballVelocity = 900;
+    private float ballVelocity;
     private float ballX, ballY;
 
     //pillar variables
-    private float pillarVelocity = 3;
+    private float pillarVelocity = 10;
     private Random randomNum;
     private float[] pillarOffset;
     private float maxPillarOffset;
@@ -111,6 +111,9 @@ public class GameScreen implements Screen {
         scoreFont.setColor(Color.BLACK);
         scoreFont.getData().setScale(10);
 
+        app.score = 0;
+        ballVelocity = 10;
+
        // gameState = 0;
        // touchCood = new Vector3();
         //Button
@@ -157,22 +160,31 @@ public class GameScreen implements Screen {
          shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
          shapeRenderer.setColor(com.badlogic.gdx.graphics.Color.BLACK);
          **/
-        if (gameState == 0 && Gdx.input.justTouched()) {
-            //start game
-            gameState = 1;
-            System.out.println("Touching!");
-        } else if (gameState == 1) {
+        if (gameState == 0 ) {
+            if(Gdx.input.justTouched()){
+                //start game
+                gameState = 1;
+                System.out.println("Touching!");
+            }else{
+                scoreFont.draw(app.batch, "Tap to start", app.viewportWidth/6, app.viewportHeight*2/3);
+            }
+
+        } //else if(gameState==0 ){
+
+
+         else if (gameState == 1) {
 
             //Track ball movement
             if (Gdx.input.isTouched()) {
-                System.out.println("Screen in touched");
+
                 // touchCood.set(Gdx.input.getX(), Gdx.input.getY(), 0);
                 // camera.unproject(touchCoord);
                 //  float touchX = touchCoord.x;
 
                 if (Gdx.input.getX() < ballX + ball.getWidth() / 2) {
                     //ball goes left if user touches to the left of ball
-                    System.out.println("Touch Left");
+
+                    Gdx.app.log("ball velocity", String.valueOf(ballVelocity));
                     if (ballX > 0) { //ensure ball does not go off screen
                         ballX -= ballVelocity;
                     }
@@ -247,7 +259,14 @@ public class GameScreen implements Screen {
 
         } else if(gameState == 2) { //game over
             System.out.println("I am in here!");
+
             app.overScreen.finalScore = app.score;
+            //reset score etc.
+            app.score = 0;
+            pillarVelocity = 10;
+            ballVelocity = 10;
+            gameState = 0;
+            pillarScoring = 0;
             app.setScreen(app.overScreen);
              //display score and highest score
              //gameOverStage.act(Math.min(Gdx.graphics.getDeltaTime(),1/30f));
@@ -255,22 +274,8 @@ public class GameScreen implements Screen {
              //Table.drawDebug(gameOverStage);
 
 
-             //reset score etc.
-             app.score = 0;
-             pillarVelocity = 3;
-             ballVelocity = 3;
-             gameState = 0;
-             pillarScoring = 0;
 
-        }else{
-            //else code cannot be empty, if not game will glitch bad
 
-            //reset score etc.
-            app.score = 0;
-            pillarVelocity = 3;
-            ballVelocity = 3;
-            gameState = 0;
-            pillarScoring = 0;
         }
 
         app.batch.end();

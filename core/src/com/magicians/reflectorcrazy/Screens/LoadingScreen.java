@@ -60,9 +60,6 @@ public class LoadingScreen implements Screen {
         shapeRenderer.rect(app.viewportWidth/4+3, app.camera.viewportHeight/2 + 3, (app.viewportWidth/2)*progress -3, app.viewportHeight/12 - 6);
         shapeRenderer.end();
 
-        app.batch.begin();
-        app.font.draw(app.batch, "loading...", 20,20 );
-        app.batch.end();
     }
 
     private void update(float delta){

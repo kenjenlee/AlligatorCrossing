@@ -30,8 +30,8 @@ public class OverScreen implements Screen {
     private Stage stage;
     private Skin skin;
     private ShapeRenderer shapeRenderer;
-    private TextButton buttonHighScore, buttonPlay, buttonQuit;
-    private BitmapFont fontButton;
+    private TextButton buttonPlay, buttonQuit, buttonMainMenu;
+    private BitmapFont fontButton, fontScore;
     public int finalScore = 0;
 
     private Label label;
@@ -44,13 +44,20 @@ public class OverScreen implements Screen {
         this.shapeRenderer = new ShapeRenderer();
         this.gameScreen = new GameScreen(this.app);
         this.fontButton = new BitmapFont();
+        this.fontScore = new BitmapFont();
+
+
         this.table = new Table();
-        this.table.top();
         this.table.setFillParent(true);
+
     }
 
     @Override
     public void show() {
+
+        Gdx.gl.glClearColor(1f,1f,1f,1f);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
         System.out.println("Over screen!");
         this.skin = new Skin();
         this.skin.addRegions(app.assets.get("UI/uiskin.atlas", TextureAtlas.class));
@@ -59,38 +66,44 @@ public class OverScreen implements Screen {
 
 
         initButton();
-        fontButton.getData().setScale(20,20);
+        fontScore.getData().setScale(8,8);
 
-        label = new Label(String.valueOf(finalScore),
-                new Label.LabelStyle(fontButton, Color.BLACK));
-        label.setSize(app.viewportWidth/10, app.viewportHeight/10);
+        label = new Label("Score: " +String.valueOf(finalScore),
+                new Label.LabelStyle(fontScore, Color.BLACK));
+        label.setSize(app.viewportWidth/2,app.viewportHeight/10);
+        label.setPosition(app.viewportWidth/2, app.viewportHeight/6);
         System.out.println(finalScore);
 
-        table.add(label).expandX().padTop(50);
+        table.top().padTop(app.viewportHeight/6);
+        table.add(label);//.padTop(app.viewportHeight/6);//.padLeft(app.viewportWidth/4).padTop(app.viewportHeight/4);
+
         stage.addActor(table);
 
         Gdx.input.setInputProcessor(stage);
     }
 
     private void initButton(){
+        fontButton.getData().setScale(7.5f,7.5f);
+
         buttonPlay = new TextButton("Restart", skin, "default");
-        buttonPlay.setPosition(app.viewportWidth/5, app.viewportHeight/3);
-        buttonPlay.setSize(app.viewportWidth/5, app.viewportHeight/10);
+        buttonPlay.setPosition(app.viewportWidth/4, app.viewportHeight*3/5);
+        buttonPlay.setSize(app.viewportWidth/2, app.viewportHeight/10);
         buttonPlay.addListener(new ClickListener() {
 
             @Override
 
             public void clicked(InputEvent event, float x, float y) {
-
+                stage.clear();
+                table.clear();
                 app.setScreen(app.gameScreen);
 
             }
         });
         stage.addActor(buttonPlay);
 
-        buttonQuit = new TextButton("Restart", skin, "default");
-        buttonQuit.setPosition(app.viewportWidth/2, app.viewportHeight/3);
-        buttonQuit.setSize(app.viewportWidth/5, app.viewportHeight/10);
+        buttonQuit = new TextButton("Quit", skin, "default");
+        buttonQuit.setPosition(app.viewportWidth/4, app.viewportHeight/4.5f);
+        buttonQuit.setSize(app.viewportWidth/2, app.viewportHeight/10);
         buttonQuit.addListener(new ClickListener() {
 
             @Override
@@ -101,6 +114,21 @@ public class OverScreen implements Screen {
             }
         });
         stage.addActor(buttonQuit);
+
+        buttonMainMenu = new TextButton("Main\nScreen", skin, "default");
+        buttonMainMenu.setPosition(app.viewportWidth/4, app.viewportHeight*2/5);
+        buttonMainMenu.setSize(app.viewportWidth/2, app.viewportHeight/7);
+        buttonMainMenu.addListener(new ClickListener() {
+
+            @Override
+
+            public void clicked(InputEvent event, float x, float y) {
+
+               // app.setScreen(app.menuScreen);
+
+            }
+        });
+        stage.addActor(buttonMainMenu);
 
     }
 
@@ -144,6 +172,7 @@ public class OverScreen implements Screen {
         stage.dispose();
         skin.dispose();
         fontButton.dispose();
+
 
     }
 }
