@@ -32,6 +32,7 @@ public class LoadingScreen implements Screen {
         app.assets.load("Img/pillarLeft.png", Texture.class);
         app.assets.load("Img/pillarRight.png", Texture.class);
         app.assets.load("UI/uiskin.atlas", TextureAtlas.class);
+
       //  app.assets.load();
       //  app.assets.load();
 
@@ -68,7 +69,8 @@ public class LoadingScreen implements Screen {
         System.out.println(progress);
 
         if(progress >= 0.99f && app.assets.update()){
-            app.setScreen(app.gameScreen);
+            //app.setScreen(app.gameScreen);
+            app.setScreen(app.startScreen);
         }
     }
 

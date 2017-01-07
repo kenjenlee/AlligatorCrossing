@@ -10,6 +10,7 @@ import com.badlogic.gdx.Game;
 import com.magicians.reflectorcrazy.Screens.GameScreen;
 import com.magicians.reflectorcrazy.Screens.LoadingScreen;
 import com.magicians.reflectorcrazy.Screens.OverScreen;
+import com.magicians.reflectorcrazy.Screens.StartScreen;
 
 
 public class Reflector extends Game {
@@ -21,6 +22,7 @@ public class Reflector extends Game {
     public GameScreen gameScreen;
     public OverScreen overScreen;
     public LoadingScreen loadingScreen;
+    public StartScreen startScreen;
     public AssetManager assets;
 
     public int score = 0;
@@ -40,6 +42,7 @@ public class Reflector extends Game {
         gameScreen = new GameScreen(this);
         overScreen = new OverScreen(this);
         loadingScreen = new LoadingScreen(this);
+        startScreen = new StartScreen(this);
         assets = new AssetManager();
 
         this.setScreen(loadingScreen);
@@ -57,10 +60,6 @@ public class Reflector extends Game {
         //   batch.setProjectionMatrix(camera.combined);
 
         super.render();
-
-
-
-
     }
 
     @Override

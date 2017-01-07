@@ -35,9 +35,9 @@ public class Screen1 implements Screen{
 
         stage.draw();
 
-        app.batch.begin();
-        app.font.draw(app.batch, "Splashscreen!", 120, 120);
-        app.batch.end();
+        //app.batch.begin();
+        //app.font.draw(app.batch, "Splashscreen!", 120, 120);
+        //app.batch.end();
     }
 
     public void update(float delta){

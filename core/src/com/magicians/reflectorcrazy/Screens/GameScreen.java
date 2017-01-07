@@ -272,10 +272,6 @@ public class GameScreen implements Screen {
              //gameOverStage.act(Math.min(Gdx.graphics.getDeltaTime(),1/30f));
              //gameOverStage.draw();
              //Table.drawDebug(gameOverStage);
-
-
-
-
         }
 
         app.batch.end();
