@@ -118,7 +118,7 @@ public class StartScreen implements Screen {
     @Override
     public void render(float delta) {
 
-        batch.begin();
+        app.batch.begin();
 
 
         app.batch.draw(appLogo, Gdx.graphics.getWidth() - appLogo.getWidth(), (Gdx.graphics.getHeight()
@@ -129,7 +129,7 @@ public class StartScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.draw();
 
-        batch.end();
+        app.batch.end();
     }
 
     @Override

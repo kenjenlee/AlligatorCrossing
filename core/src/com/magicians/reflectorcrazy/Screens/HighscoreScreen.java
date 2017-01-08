@@ -9,7 +9,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.magicians.reflectorcrazy.HighscoreData.SaveFile;
 import com.magicians.reflectorcrazy.Reflector;
 import com.magicians.reflectorcrazy.ScoreData;
-
 import static com.badlogic.gdx.utils.compression.CRC.Table;
 
 /**

@@ -32,7 +32,7 @@ public class LoadingScreen implements Screen {
         app.assets.load("Img/pillarLeft.png", Texture.class);
         app.assets.load("Img/pillarRight.png", Texture.class);
         app.assets.load("UI/uiskin.atlas", TextureAtlas.class);
-
+        app.assets.load("sunset.jpg", Texture.class);
       //  app.assets.load();
       //  app.assets.load();
 
