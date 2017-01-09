@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.magicians.reflectorcrazy.HighscoreData.SaveFile;
 import com.magicians.reflectorcrazy.Reflector;
 import com.sun.org.apache.xml.internal.dtm.ref.dom2dtm.DOM2DTM;
 
@@ -33,6 +34,10 @@ public class OverScreen implements Screen {
     private TextButton buttonPlay, buttonQuit, buttonMainMenu;
     private BitmapFont fontButton, fontScore;
     public int finalScore = 0;
+    public int tempScore = 0;
+    private SaveFile file;
+
+    public int[] highScores;
 
     private Label label;
     private Table table;
@@ -46,7 +51,7 @@ public class OverScreen implements Screen {
         this.fontButton = new BitmapFont();
         this.fontScore = new BitmapFont();
 
-
+        this.file = new SaveFile(app);
         this.table = new Table();
         this.table.setFillParent(true);
 
@@ -54,6 +59,27 @@ public class OverScreen implements Screen {
 
     @Override
     public void show() {
+
+        System.out.println(finalScore);
+        tempScore = finalScore;
+        app.sd.tentativeScore = finalScore;
+        file.load();
+        highScores = app.sd.getHighScores();
+        for(int i=0; i<app.sd.MAXINDEX; i++){
+            System.out.println(highScores[i]);
+        }
+
+        boolean lala = app.sd.isHighscore(app.sd.getTentativeScore());
+        System.out.println(lala);
+        if(lala){
+            app.sd.updateHighscore(app.sd.getTentativeScore());
+        }
+
+        SaveFile.save();
+        highScores = app.sd.getHighScores();
+        for(int i=0; i<SaveFile.sd.MAXINDEX; i++){
+            System.out.println(highScores[i]);
+        }
 
         Gdx.gl.glClearColor(1f,1f,1f,1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);

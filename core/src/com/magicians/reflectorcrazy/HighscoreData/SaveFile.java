@@ -1,6 +1,7 @@
 package com.magicians.reflectorcrazy.HighscoreData;
 
 import com.magicians.reflectorcrazy.HighscoreData.ScoreData;
+import com.magicians.reflectorcrazy.Reflector;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -15,14 +16,14 @@ import java.io.ObjectOutputStream;
  */
 
 public class SaveFile {
-    public static ScoreData sd;
+    public  static ScoreData sd;
 
-    public SaveFile(){
-
+    public SaveFile(Reflector app){
+        this.sd = app.sd;
     }
 
     public static boolean fileExists(){
-        File f = new File("highScores.sav");
+        File f = new File("C:/Users/Jen/Desktop/highScores.sav");
         return f.exists();
     }
 
@@ -30,13 +31,16 @@ public class SaveFile {
 
         try{
             if(!fileExists()){
-                return false;
+                init();
             }
             ObjectInputStream in = new ObjectInputStream(
-                    new FileInputStream("highScores.sav"));
+                    new FileInputStream("C:/Users/Jen/Desktop/highScores.sav"));
+
+            sd = (ScoreData)in.readObject();
+            /**
             for(int i = 0; i<sd.MAXINDEX; i++){
                 sd.highScores[i] = in.readInt();
-            }
+            }**/
 
             in.close();
 
@@ -44,19 +48,25 @@ public class SaveFile {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
         return true;
     }
 
-    public static boolean save(){
+    public static  boolean save(){
         try{
+
+            FileOutputStream fout = new FileOutputStream("C:/Users/Jen/Desktop/highScores.sav");
             ObjectOutputStream out = new ObjectOutputStream(
-                    new FileOutputStream("highScores.sav")
-            );
+                    fout);
+
+            out.writeObject(sd);
+            /**
             for(int i =0; i<sd.MAXINDEX; i++){
                 out.write(sd.highScores[i]);
                 out.writeChar(' ');
-            }
+            }**/
 
             out.close();
 
@@ -66,6 +76,12 @@ public class SaveFile {
             e.printStackTrace();
         }
         return true;
+    }
+
+    public static void init(){
+        sd = new ScoreData();
+        sd.init();
+        save();
     }
 
 
