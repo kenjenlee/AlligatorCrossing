@@ -28,8 +28,8 @@ public class LoadingScreen implements Screen {
     }
 
     private void queueAssets(){
-        app.assets.load("Img/badlogic.jpg", Texture.class);
-        app.assets.load("Img/pillarLeft.png", Texture.class);
+        app.assets.load("Img/allig.jpeg", Texture.class);
+        app.assets.load("Img/log.jpg", Texture.class);
         app.assets.load("Img/pillarRight.png", Texture.class);
         app.assets.load("UI/uiskin.atlas", TextureAtlas.class);
         app.assets.load("Img/sunset.jpg", Texture.class);

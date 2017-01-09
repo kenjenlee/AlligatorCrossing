@@ -34,7 +34,7 @@ public class GameScreen implements Screen {
     // private ShapeRenderer shapeRenderer;
     private Rectangle[] rectLeft;
     private Rectangle[] rectRight;
-    private Circle circleBall;
+    private Rectangle circleBall;
 
     // ball variables
     private float ballVelocity;
@@ -83,9 +83,9 @@ public class GameScreen implements Screen {
         System.out.println("Game Screen");
 
         //Texture variables
-        ball = app.assets.get("Img/badlogic.jpg", Texture.class);
-        pillarLeft = app.assets.get("Img/pillarLeft.png", Texture.class);
-        pillarRight = app.assets.get("Img/pillarRight.png", Texture.class);
+        ball = app.assets.get("Img/allig.jpeg", Texture.class);
+        pillarLeft = app.assets.get("Img/log.jpg", Texture.class);
+        pillarRight = app.assets.get("Img/log.jpg", Texture.class);
         //   background = new Texture(Gdx.files.internal(""));
 
         //ball variables
@@ -104,7 +104,7 @@ public class GameScreen implements Screen {
         //shapeRenderer = new ShapeRenderer();
         rectLeft = new Rectangle[pillarNum];
         rectRight = new Rectangle[pillarNum];
-        circleBall = new Circle();
+        circleBall = new Rectangle();
 
         //Font
         scoreFont = new BitmapFont();
@@ -250,7 +250,9 @@ public class GameScreen implements Screen {
             }
 
             app.batch.draw(ball, ballX, ballY);
-            circleBall.set(ballX + ball.getWidth() / 2, ballY + ball.getHeight() / 2, ball.getHeight() / 2);
+            circleBall.set(ballX+ball.getWidth()/2,ballY, ball.getWidth() / 3, ball.getHeight());
+
+            //circleBall.set(ballX + ball.getWidth() / 2, ballY + ball.getHeight() / 2, ball.getHeight() / 2);
             // shapeRenderer.circle(circleBall.x, circleBall.y, circleBall.radius);
             scoreFont.draw(app.batch, String.valueOf(app.score), 100, 200);
 

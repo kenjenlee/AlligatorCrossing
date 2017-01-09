@@ -54,7 +54,6 @@ public class OverScreen implements Screen {
         this.file = new SaveFile(app);
         this.table = new Table();
         this.table.setFillParent(true);
-
     }
 
     @Override

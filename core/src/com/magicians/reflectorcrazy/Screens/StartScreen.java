@@ -165,13 +165,17 @@ public class StartScreen implements Screen {
         appLogo.getWidth(), appLogo.getHeight());
 
 
+        System.out.println("THE WIDTH IS");
+        System.out.print(Gdx.graphics.getWidth());
+        System.out.println("THE WIDTH IS");
+        System.out.print(appLogo.getHeight()*2);
+
 
 */
 
 
 
-        System.out.println("THE WIDTH IS");
-        System.out.print(Gdx.graphics.getWidth());
+
 
 
         Gdx.gl.glClearColor(1f,1f,1f,1f);

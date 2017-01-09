@@ -23,7 +23,7 @@ public class SaveFile {
     }
 
     public static boolean fileExists(){
-        File f = new File("C:/Users/Jen/Desktop/highScores.sav");
+        File f = new File("C:/Users/karan/Desktop/highScores.sav");
         return f.exists();
     }
 
@@ -31,10 +31,11 @@ public class SaveFile {
 
         try{
             if(!fileExists()){
+                System.out.println("FILE IS NOT FoUnd");
                 init();
             }
             ObjectInputStream in = new ObjectInputStream(
-                    new FileInputStream("C:/Users/Jen/Desktop/highScores.sav"));
+                    new FileInputStream("C:/Users/karan/Desktop/highScores.sav"));
 
             sd = (ScoreData)in.readObject();
             /**
@@ -57,7 +58,7 @@ public class SaveFile {
     public static  boolean save(){
         try{
 
-            FileOutputStream fout = new FileOutputStream("C:/Users/Jen/Desktop/highScores.sav");
+            FileOutputStream fout = new FileOutputStream("C:/Users/karan/Desktop/highScores.sav");
             ObjectOutputStream out = new ObjectOutputStream(
                     fout);
 
