@@ -29,7 +29,7 @@ public class HighscoreScreen implements Screen {
     public HighscoreScreen(Reflector app){
         this.app = app;
         sd = new ScoreData();
-        file = new SaveFile();
+        file = new SaveFile(app);
         table = new Table();
         font = new BitmapFont();
         stage = new Stage();
@@ -39,8 +39,8 @@ public class HighscoreScreen implements Screen {
     @Override
     public void show() {
         file.load();
-        highscores = new int[sd.MAXINDEX];
-        highscores = file.sd.highScores;
+        //highscores = new int[sd.MAXINDEX];
+        highscores = file.sd.getHighScores();
         if(SaveFile.load()){
             for(int i=0; i<sd.MAXINDEX; i++){
 
