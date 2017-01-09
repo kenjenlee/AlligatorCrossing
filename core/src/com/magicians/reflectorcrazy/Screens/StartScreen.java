@@ -48,7 +48,7 @@ public class StartScreen implements Screen {
 
         System.out.println("Game Screen");
 
-        appLogo = app.assets.get("sunset.jpg", Texture.class);
+        appLogo = app.assets.get("Img/sunset.jpg", Texture.class);
 
         this.skin=new Skin();
         this.skin.addRegions(app.assets.get("UI/uiskin.atlas", TextureAtlas.class));
@@ -90,7 +90,7 @@ public class StartScreen implements Screen {
 
             public void clicked(InputEvent event, float x, float y) {
 
-                app.setScreen(app.gameScreen); //CHANGE THIS TO HIGHSCORES SCREEN
+                app.setScreen(app.highscoreScreen);
 
             }
         });
@@ -106,7 +106,7 @@ public class StartScreen implements Screen {
 
             public void clicked(InputEvent event, float x, float y) {
 
-                app.setScreen(app.gameScreen);
+                app.setScreen(app.gameScreen); //TO BE CHANGED TO CREDIT SCREEN
 
             }
         });

@@ -1,6 +1,6 @@
 package com.magicians.reflectorcrazy.HighscoreData;
 
-import com.magicians.reflectorcrazy.ScoreData;
+import com.magicians.reflectorcrazy.HighscoreData.ScoreData;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -17,8 +17,8 @@ import java.io.ObjectOutputStream;
 public class SaveFile {
     public static ScoreData sd;
 
-    public SaveFile(ScoreData sd){
-        this.sd = sd;
+    public SaveFile(){
+
     }
 
     public static boolean fileExists(){
@@ -34,14 +34,15 @@ public class SaveFile {
             }
             ObjectInputStream in = new ObjectInputStream(
                     new FileInputStream("highScores.sav"));
-            sd = (ScoreData)in.readObject();
+            for(int i = 0; i<sd.MAXINDEX; i++){
+                sd.highScores[i] = in.readInt();
+            }
+
             in.close();
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
         return true;
@@ -52,7 +53,11 @@ public class SaveFile {
             ObjectOutputStream out = new ObjectOutputStream(
                     new FileOutputStream("highScores.sav")
             );
-            out.writeObject(sd);
+            for(int i =0; i<sd.MAXINDEX; i++){
+                out.write(sd.highScores[i]);
+                out.writeChar(' ');
+            }
+
             out.close();
 
         } catch (FileNotFoundException e) {

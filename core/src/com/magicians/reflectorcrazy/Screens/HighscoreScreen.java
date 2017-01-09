@@ -8,7 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.magicians.reflectorcrazy.HighscoreData.SaveFile;
 import com.magicians.reflectorcrazy.Reflector;
-import com.magicians.reflectorcrazy.ScoreData;
+import com.magicians.reflectorcrazy.HighscoreData.ScoreData;
 import static com.badlogic.gdx.utils.compression.CRC.Table;
 
 /**
@@ -24,11 +24,12 @@ public class HighscoreScreen implements Screen {
     private com.badlogic.gdx.scenes.scene2d.ui.Table table;
     private BitmapFont font;
     private Stage stage;
+    private int[] highscores;
 
-    HighscoreScreen(Reflector app){
+    public HighscoreScreen(Reflector app){
         this.app = app;
         sd = new ScoreData();
-        file = new SaveFile(sd);
+        file = new SaveFile();
         table = new Table();
         font = new BitmapFont();
         stage = new Stage();
@@ -37,10 +38,13 @@ public class HighscoreScreen implements Screen {
 
     @Override
     public void show() {
+        file.load();
+        highscores = new int[sd.MAXINDEX];
+        highscores = file.sd.highScores;
         if(SaveFile.load()){
             for(int i=0; i<sd.MAXINDEX; i++){
 
-                int score = sd.highScores[i];
+                int score = highscores[i];
                 label = new Label(String.valueOf(i+1)+String.valueOf(score),
                         new Label.LabelStyle(font, Color.BLACK));
                 label.setSize(app.viewportWidth/2,app.viewportHeight/10);

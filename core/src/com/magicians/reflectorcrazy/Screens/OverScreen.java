@@ -124,7 +124,7 @@ public class OverScreen implements Screen {
 
             public void clicked(InputEvent event, float x, float y) {
 
-               // app.setScreen(app.menuScreen);
+                app.setScreen(app.startScreen);
 
             }
         });

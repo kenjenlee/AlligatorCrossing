@@ -7,7 +7,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.Game;
+import com.magicians.reflectorcrazy.HighscoreData.SaveFile;
 import com.magicians.reflectorcrazy.Screens.GameScreen;
+import com.magicians.reflectorcrazy.Screens.HighscoreScreen;
 import com.magicians.reflectorcrazy.Screens.LoadingScreen;
 import com.magicians.reflectorcrazy.Screens.OverScreen;
 import com.magicians.reflectorcrazy.Screens.StartScreen;
@@ -23,6 +25,8 @@ public class Reflector extends Game {
     public OverScreen overScreen;
     public LoadingScreen loadingScreen;
     public StartScreen startScreen;
+    public HighscoreScreen highscoreScreen;
+    public SaveFile saveFile;
     public AssetManager assets;
 
     public int score = 0;
@@ -43,6 +47,9 @@ public class Reflector extends Game {
         overScreen = new OverScreen(this);
         loadingScreen = new LoadingScreen(this);
         startScreen = new StartScreen(this);
+        highscoreScreen = new HighscoreScreen(this);
+        saveFile = new SaveFile();
+        saveFile.save();
         assets = new AssetManager();
 
         this.setScreen(loadingScreen);

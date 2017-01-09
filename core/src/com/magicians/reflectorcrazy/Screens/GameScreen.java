@@ -27,7 +27,7 @@ public class GameScreen implements Screen {
     private Reflector app;
 
     private int gameState = 0;
-    private Vector3 touchCood;
+    //private Vector3 touchCood;
 
 
     //shape Renderer

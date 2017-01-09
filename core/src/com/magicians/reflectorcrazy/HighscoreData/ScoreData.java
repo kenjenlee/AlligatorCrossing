@@ -1,4 +1,4 @@
-package com.magicians.reflectorcrazy;
+package com.magicians.reflectorcrazy.HighscoreData;
 
 import java.io.Serializable;
 
@@ -10,14 +10,23 @@ public class ScoreData implements Serializable {
 
     public int[] highScores;
     public static int MAXINDEX = 10;
-
+    private SaveFile saveFile;
+    public int score;
 
     public ScoreData(){
         highScores = new int[MAXINDEX];
+
         for(int i=0; i<MAXINDEX; i++){
             highScores[i] = 0;
         }
+        saveFile = new SaveFile();
+        saveFile.load();
 
+
+    }
+
+    public int[] getHighScores(){
+        return highScores;
     }
 
     public boolean isHighscore(int score){
