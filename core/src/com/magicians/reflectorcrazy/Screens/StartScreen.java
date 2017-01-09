@@ -73,10 +73,15 @@ public class StartScreen implements Screen {
 
         appLogo= new Texture(Gdx.files.internal("Img/sunset.jpg"));
 
-        TextureRegion region = new TextureRegion(appLogo, Gdx.graphics.getWidth()/2-appLogo.getWidth()/2, (Gdx.graphics.getHeight()-
-                appLogo.getHeight())*7/8,appLogo.getWidth(), appLogo.getHeight() );
+        //TextureRegion region = new TextureRegion(appLogo, Gdx.graphics.getWidth()/2-appLogo.getWidth()/2, (Gdx.graphics.getHeight()-
+        //      appLogo.getHeight())*7/8,appLogo.getWidth(), appLogo.getHeight() );
 
-        Image actor= new Image(region);
+
+        Image actor= new Image(appLogo);
+
+        actor.setBounds(app.viewportWidth/2-appLogo.getWidth(),(Gdx.graphics.getHeight()-
+                appLogo.getHeight())*4/5 ,appLogo.getWidth()*2, appLogo.getHeight()*2);
+
 
         stage.addActor(actor);
 
