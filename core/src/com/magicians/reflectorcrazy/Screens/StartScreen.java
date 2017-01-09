@@ -8,8 +8,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -29,18 +31,26 @@ public class StartScreen implements Screen {
     SpriteBatch batch;
     private Reflector app;
     private Texture appLogo;
-    private int gameState=0;
+
+
+
+    private int imgWidth=0;
+    private int imgHeight=0;
 
     private Stage stage;
     private Skin skin;
     private TextButton startButton, scoresButton, creditsButton;
     private BitmapFont fontButton;
 
+
+
+
+
+
     public StartScreen(Reflector app){
         this.app=app;
         this.stage= new Stage(new StretchViewport(app.viewportWidth, app.viewportHeight, app.camera));
         this.fontButton=new BitmapFont();
-
     }
 
     @Override
@@ -58,6 +68,18 @@ public class StartScreen implements Screen {
         initButton();
 
         Gdx.input.setInputProcessor(stage);
+
+
+
+        appLogo= new Texture(Gdx.files.internal("Img/sunset.jpg"));
+
+        TextureRegion region = new TextureRegion(appLogo, Gdx.graphics.getWidth()/2-appLogo.getWidth()/2, (Gdx.graphics.getHeight()-
+                appLogo.getHeight())*7/8,appLogo.getWidth(), appLogo.getHeight() );
+
+        Image actor= new Image(region);
+
+        stage.addActor(actor);
+
     }
 
 
@@ -120,10 +142,32 @@ public class StartScreen implements Screen {
 
         app.batch.begin();
 
+/*
+        imgWidth=appLogo.getWidth()/
+
+        app.batch.draw(appLogo, );
+
+        (appLogo, Gdx.graphics.getWidth()/2-appLogo.getWidth()/2, Gdx.graphics.getHeight()...,appLogo.getWidth())
+
 
         app.batch.draw(appLogo, Gdx.graphics.getWidth() - appLogo.getWidth(), (Gdx.graphics.getHeight()
-                - appLogo.getHeight()) * 4 / 5, Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 5);//places the centre of the
+                - appLogo.getHeight()) * 4 / 5, Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 10);//places the centre of the
             // logo 4/5 of the way up, with a certain width and height
+
+        app.batch.draw(appLogo, Gdx.graphics.getWidth()/2 - appLogo.getWidth()/2, Gdx.graphics.getHeight()/2-appLogo.getWidth()/2,
+        appLogo.getWidth(), appLogo.getHeight());
+        app.batch.draw(appLogo, Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2,
+        appLogo.getWidth(), appLogo.getHeight());
+
+
+
+*/
+
+
+
+        System.out.println("THE WIDTH IS");
+        System.out.print(Gdx.graphics.getWidth());
+
 
         Gdx.gl.glClearColor(1f,1f,1f,1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
